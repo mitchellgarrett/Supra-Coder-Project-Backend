@@ -1,0 +1,103 @@
+#############
+### Users ###
+#############
+
+GET http://localhost:8000/users
+
+###
+
+POST http://localhost:8000/user/register
+Content-Type: application/json
+
+{
+	"firstName": "Mitchell",
+	"lastName": "Garrett",
+	"username": "mitchellgarrett",
+	"password": "password"
+}
+
+###
+
+POST http://localhost:8000/user/login
+Content-Type: application/json
+
+{
+	"username": "mitchellgarrett",
+	"password": "password"
+}
+
+###
+
+POST http://localhost:8000/user/update/65b1747da5982056c2188529
+Content-Type: application/json
+
+{
+	"username": "mitchellgarrett"
+}
+
+###
+
+DELETE http://localhost:8000/user/delete/65b2c465385415f0ab04833b
+
+
+
+#############
+### Items ###
+#############
+
+GET http://localhost:8000/items
+
+###
+
+GET http://localhost:8000/items/65b2c4e81d4f377274b284bd
+
+###
+
+POST http://localhost:8000/item/new
+Content-Type: application/json
+
+{
+	"userId": "65b2c4e81d4f377274b284bd",
+	"itemName": "Bag 'o bags",
+	"description": "It's a bag, with a bunch of bags inside it.",
+	"quantity": "10"
+}
+
+###
+
+POST http://localhost:8000/item/new
+Content-Type: application/json
+
+{
+	"userId": "65b2c4e81d4f377274b284bd",
+	"itemName": "A thing with a long description",
+	"description": "This description is pretty dang long and should stop right around.............................. here. If you can see this then we got issues.",
+	"quantity": "1"
+}
+
+###
+
+###
+
+POST http://localhost:8000/item/new
+Content-Type: application/json
+
+{
+	"userId": "0",
+	"itemName": "The forbidden item",
+	"description": "No one owns this item. It should only show up in the global inventory list.",
+	"quantity": "1"
+}
+
+###
+
+POST http://localhost:8000/item/update/65b17b19433a5cc72826dc37
+Content-Type: application/json
+
+{
+	"quantity": "5"
+}
+
+###
+
+DELETE http://localhost:8000/item/delete/65b2cf391d4f377274b86cbd
