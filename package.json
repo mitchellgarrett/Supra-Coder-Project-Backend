@@ -4,9 +4,11 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
-        "build": "npx tsc",
-        "start": "node dist/server.js",
-        "dev": "nodemon server.ts"
+        "build": "rimraf dist && tsc",
+        "start": "nodemon src/index.ts",
+        "dev": "nodemon server.ts",
+        "ts.check": "tsc --project tsconfig.json",
+        "add-build": "git add dist"
     },
     "author": "Mitchell Garrett",
     "license": "ISC",
@@ -26,5 +28,10 @@
         "nodemon": "^3.0.3",
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3"
-    }
+    },
+    "pre-commit": [
+        "ts.check",
+        "build",
+        "add-build"
+    ]
 }
