@@ -9,13 +9,13 @@ import bcrypt from "bcrypt";
 dotenv.config();
 
 // Initialize express server
-const server = express();
+const app = express();
 
 // Force express to accept json
-server.use(express.json());
+app.use(express.json());
 
 // Use cors to prevent cross-site issues
-server.use(
+app.use(
     cors({
         origin: [process.env.CLIENT_URL!],
     })
@@ -32,7 +32,7 @@ import User from "./models/User";
 import Item from "./models/Item";
 
 // Default endpoint to show proof of life
-server.get("/", (_req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
     return res.send("Inventory Manager Server");
 });
 
@@ -42,7 +42,7 @@ server.get("/", (_req: Request, res: Response) => {
 
 // Get all users
 // *** for debugging purposes ***
-server.get("/users", async (request, response) => {
+app.get("/users", async (request, response) => {
     // Find all users in database
     const users = await User.find();
 
@@ -51,7 +51,7 @@ server.get("/users", async (request, response) => {
 });
 
 // Create new user with given data
-server.post("/user/register", async (request, response) => {
+app.post("/user/register", async (request, response) => {
     const { firstName, lastName, username, password } = request.body;
 
     // Check that username does not already exist
@@ -88,7 +88,7 @@ server.post("/user/register", async (request, response) => {
 });
 
 // Get a user given its username and password
-server.post("/user/login", async (request, response) => {
+app.post("/user/login", async (request, response) => {
     const { username, password } = request.body;
 
     const user = await User.findOne({ username: username });
@@ -108,7 +108,7 @@ server.post("/user/login", async (request, response) => {
 });
 
 // Get a user's username given its mongo id
-server.get("/user/get/:id", async (request, response) => {
+app.get("/user/get/:id", async (request, response) => {
     const user = await User.findById(request.params.id);
     if (!user)
         return response.json({
@@ -122,7 +122,7 @@ server.get("/user/get/:id", async (request, response) => {
 });
 
 // Update a user's account details given its mongo id
-server.post("/user/update/:id", async (request, response) => {
+app.post("/user/update/:id", async (request, response) => {
     const { firstName, lastName, username, password } = request.body;
 
     // Find user in database
@@ -146,7 +146,7 @@ server.post("/user/update/:id", async (request, response) => {
 });
 
 // Delete a user given its mongo id
-server.delete("/user/delete/:id", async (request, response) => {
+app.delete("/user/delete/:id", async (request, response) => {
     // Delete user from database
     const user = await User.findByIdAndDelete(request.params.id);
 
@@ -159,7 +159,7 @@ server.delete("/user/delete/:id", async (request, response) => {
 //#region Item endpoints
 
 // Get all items
-server.get("/items", async (request, response) => {
+app.get("/items", async (request, response) => {
     // Find all items in database
     const items = await Item.find();
 
@@ -168,7 +168,7 @@ server.get("/items", async (request, response) => {
 });
 
 // Get list of items belonging to user
-server.get("/items/:id", async (request, response) => {
+app.get("/items/:id", async (request, response) => {
     // Find items in database with given userId
     const items = await Item.find({ userId: request.params.id });
 
@@ -177,7 +177,7 @@ server.get("/items/:id", async (request, response) => {
 });
 
 // Create new item
-server.post("/item/new", async (request, response) => {
+app.post("/item/new", async (request, response) => {
     const { userId, itemName, description, quantity } = request.body;
 
     // Create new item
@@ -196,7 +196,7 @@ server.post("/item/new", async (request, response) => {
 });
 
 // Update an items's details given its mongo id
-server.put("/item/update/:id", async (request, response) => {
+app.put("/item/update/:id", async (request, response) => {
     const { itemName, description, quantity } = request.body;
 
     // Find item in database
@@ -219,7 +219,7 @@ server.put("/item/update/:id", async (request, response) => {
 });
 
 // Delete an item given its mongo id
-server.delete("/item/delete/:id", async (request, response) => {
+app.delete("/item/delete/:id", async (request, response) => {
     // Delete item from database
     const item = await Item.findByIdAndDelete(request.params.id);
 
@@ -249,4 +249,6 @@ const getPasswordHash = (password: string) => {
 
 // Start server on port
 const port: String = process.env.SERVER_PORT!;
-server.listen(port, () => console.log("Server started on port " + port));
+app.listen(port, () => console.log("Server started on port " + port));
+
+export default app;
