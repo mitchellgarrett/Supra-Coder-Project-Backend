@@ -5,7 +5,7 @@
     "main": "server.ts",
     "scripts": {
         "build": "npx tsc",
-        "vercel-build": "echo vercel-build doesn't do anything",
+        "vercel-build": "echo howdy",
         "start": "nodemon src/index.ts",
         "dev": "nodemon server.ts"
     },
