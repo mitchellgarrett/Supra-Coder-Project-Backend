@@ -20,7 +20,7 @@ server.use(express.json());
         origin: [process.env.CLIENT_URL!],
     })
 );*/
-server.use(cors);
+//server.use(cors);
 
 // Connect to mongo databse
 mongoose
