@@ -20,6 +20,7 @@ server.use(express.json());
         origin: [process.env.CLIENT_URL!],
     })
 );*/
+server.use(cors);
 
 // Connect to mongo databse
 mongoose
@@ -47,10 +48,6 @@ server.get("/users", async (request, response) => {
     const users = await User.find();
 
     // Return json to client
-    response.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://mitchellgarrett.github.io"
-    );
     response.json(users);
 });
 
@@ -108,10 +105,6 @@ server.post("/user/login", async (request, response) => {
         });
 
     // Return json to client
-    response.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://mitchellgarrett.github.io"
-    );
     response.json(user);
 });
 
