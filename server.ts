@@ -31,6 +31,11 @@ mongoose
 import User from "./models/User";
 import Item from "./models/Item";
 
+// Default endpoint to show proof of life
+server.get("/", (_req: Request, res: Response) => {
+    return res.send("Inventory Manager Server");
+});
+
 //#region Database endpoints
 
 //#region User endpoints
