@@ -32,8 +32,8 @@ import User from "./models/User";
 import Item from "./models/Item";
 
 // Default endpoint to show proof of life
-server.get("/", (_req: Request, res: Response) => {
-    return res.send("Inventory Manager Server");
+server.get("/", (_request: Request, response: Response) => {
+    return response.send("Inventory Manager Server");
 });
 
 //#region Database endpoints
@@ -47,6 +47,10 @@ server.get("/users", async (request, response) => {
     const users = await User.find();
 
     // Return json to client
+    response.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://mitchellgarrett.github.io"
+    );
     response.json(users);
 });
 
@@ -104,6 +108,10 @@ server.post("/user/login", async (request, response) => {
         });
 
     // Return json to client
+    response.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://mitchellgarrett.github.io"
+    );
     response.json(user);
 });
 
